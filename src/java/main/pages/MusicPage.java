@@ -1,10 +1,10 @@
 package main.pages;
 
+import main.utils.LocatorData;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import main.utils.LocatorData;
-
 import java.time.Duration;
 import java.util.Random;
 
