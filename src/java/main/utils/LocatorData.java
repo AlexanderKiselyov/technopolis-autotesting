@@ -3,6 +3,10 @@ package main.utils;
 public class LocatorData {
     public static final String TOOLBAR = ".//ul[@class='toolbar_nav']";
 
+    public static final String TOOLBAR_RIGHT = ".//*[contains(@id, 'ToolbarUserDropdown')]//*[contains(@class, 'toolbar_dropdown_w')]";
+    public static final String TOOLBAR_RIGHT_EXIT_BUTTON = ".//a[@data-l='t,logout']";
+    public static final String TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON = ".//input[@data-l='t,logout']";
+
     public static final String LOGIN_URL = "https://ok.ru/";
     public static final String LOGIN_FIELD = ".//input[@id='field_email']";
     public static final String LOGIN_PASSWORD_FIELD = ".//input[@id='field_password']";

@@ -1,6 +1,7 @@
 package test.tests;
 
 import main.pages.LoginPage;
+import main.pages.MessagePage;
 
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterAll;
@@ -12,20 +13,21 @@ import static com.codeborne.selenide.Selenide.closeWindow;
 public class MessageTest {
 
     private static LoginPage loginPage;
+    private static MessagePage messagePage;
 
     @BeforeAll
     public static void Start() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "d:\\programes\\chromedriver.exe");
         loginPage = new LoginPage();
     }
 
     @Test
-    public void MessageTest() {
+    public void NewMessageTest() {
 
     }
 
     @AfterAll
     public static void Stop() {
+        messagePage.logout();
         closeWindow();
         WebDriverRunner.closeWebDriver();
     }
