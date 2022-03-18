@@ -1,7 +1,7 @@
-package main.pages;
+package pages;
 
-import main.utils.LocatorData;
-import main.utils.User;
+import utils.LocatorData;
+import utils.User;
 
 import com.codeborne.selenide.SelenideElement;
 

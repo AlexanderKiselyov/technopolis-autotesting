@@ -1,6 +1,6 @@
-package main.pages;
+package pages;
 
-import main.utils.LocatorData;
+import utils.LocatorData;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;

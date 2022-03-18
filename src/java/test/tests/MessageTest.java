@@ -1,7 +1,7 @@
-package test.tests;
+package tests;
 
-import main.pages.LoginPage;
-import main.pages.MessagePage;
+import pages.LoginPage;
+import pages.MessagePage;
 
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterAll;

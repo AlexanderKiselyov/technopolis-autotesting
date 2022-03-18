@@ -1,4 +1,4 @@
-package main.utils;
+package utils;
 
 public class LocatorData {
     public static final String TOOLBAR = ".//ul[@class='toolbar_nav']";
