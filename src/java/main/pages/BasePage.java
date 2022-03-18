@@ -1,6 +1,6 @@
-package main.pages;
+package pages;
 
-import main.utils.ToolbarRight;
+import utils.ToolbarRight;
 
 public abstract class BasePage {
     private final ToolbarRight toolbarRight = new ToolbarRight();

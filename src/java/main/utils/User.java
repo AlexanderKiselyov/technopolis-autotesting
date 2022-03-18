@@ -1,4 +1,4 @@
-package main.utils;
+package utils;
 
 public class User {
     private final String login;

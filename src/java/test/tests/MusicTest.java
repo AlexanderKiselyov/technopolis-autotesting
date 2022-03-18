@@ -1,8 +1,8 @@
-package test.tests;
+package tests;
 
-import main.pages.LoginPage;
-import main.pages.MusicPage;
-import main.utils.UserData;
+import pages.LoginPage;
+import pages.MusicPage;
+import utils.UserData;
 
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterAll;

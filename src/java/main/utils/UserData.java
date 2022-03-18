@@ -1,4 +1,4 @@
-package main.utils;
+package utils;
 
 public class UserData {
     public static User user1 = new User("89995632015", "Kirill11");

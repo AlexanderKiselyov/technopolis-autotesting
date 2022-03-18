@@ -1,6 +1,6 @@
-package main.pages;
+package pages;
 
-import main.utils.Toolbar;
+import utils.Toolbar;
 
 public class MainPage extends BasePage {
 
