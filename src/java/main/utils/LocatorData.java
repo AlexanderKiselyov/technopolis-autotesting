@@ -17,4 +17,9 @@ public class LocatorData {
     public static final String MUSIC_TRACK_PLAYING = ".//wm-play-control[@playing]";
 
     public static final String MESSAGE_BUTTON = ".//*[@id='msg_toolbar_button']";
+    public static final String MESSAGE_DIALOGS = "msg-parsed-text";
+    public static final String MESSAGE_INPUT_FIELD = ".//msg-input[@data-tsid='write_msg_input']";
+    public static final String MESSAGE_LAST_SEND_MESSAGE = "msg-message";
+    public static final String MESSAGE_SETTINGS = ".//msg-icon[@icon='menu']";
+    public static final String MESSAGE_DELETE = ".//msg-tico[@icon='delete']";
 }
