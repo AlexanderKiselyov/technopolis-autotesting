@@ -4,21 +4,25 @@ import pages.LoginPage;
 import pages.MusicPage;
 import utils.UserData;
 
-import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Selenide.closeWindow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MusicTest {
+public class MusicTest extends BaseTest {
     private static LoginPage loginPage;
     private static MusicPage musicPage;
 
     @BeforeAll
     public static void Start() throws Exception {
         loginPage = new LoginPage();
+    }
+
+    @BeforeEach
+    public void setup() {
+        musicPage = null;
     }
 
     @Test
@@ -28,10 +32,8 @@ public class MusicTest {
         assertTrue(isTrackPlaying);
     }
 
-    @AfterAll
-    public static void Stop() {
+    @AfterEach
+    public void setDown() {
         musicPage.logout();
-        closeWindow();
-        WebDriverRunner.closeWebDriver();
     }
 }

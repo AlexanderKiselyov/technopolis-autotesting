@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MessageTest {
+public class MessageTest extends BaseTest {
 
     private static LoginPage loginPage;
     private static MessagePage messagePage;
@@ -28,10 +28,14 @@ public class MessageTest {
         assertTrue(messagePage.sendMessage("msg"));
     }
 
+    @Deprecated //WIP
+    @Test
+    public void DeleteMessageTest() throws Exception {
+        assertTrue(messagePage.deleteMessage("msg"));
+    }
+
     @AfterAll
     public static void Stop() {
         messagePage.logout();
-        closeWindow();
-        WebDriverRunner.closeWebDriver();
     }
 }

@@ -1,10 +1,11 @@
 package pages;
 
+import java.time.Duration;
 import java.util.Random;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 
 import utils.LocatorData;
 
@@ -15,13 +16,12 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MessagePage extends BasePage {
 
-    private static ElementsCollection dialogs;
+    private static final ElementsCollection dialogs = $$(byCssSelector(LocatorData.MESSAGE_DIALOGS));
 
     public MessagePage() throws Exception {
         if (!isPresent()) {
             throw new Exception("ERROR MESSAGE PAGE");
         }
-        dialogs = $$(byCssSelector(LocatorData.MESSAGE_DIALOGS));
     }
 
     public boolean sendMessage(String message) {
@@ -32,6 +32,19 @@ public class MessagePage extends BasePage {
             $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).pressEnter();
             return true;
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteMessage(String message) {
+        dialogs.get(0).click();
+        try {
+            $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).hover();
+            $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible, Duration.ofMillis(2000)).hover();
+            $(byXpath(LocatorData.MESSAGE_DELETE)).click();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

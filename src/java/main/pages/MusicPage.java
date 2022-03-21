@@ -13,13 +13,12 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MusicPage extends BasePage {
 
-    private static ElementsCollection tracks;
+    private static final ElementsCollection tracks = $$(byXpath(LocatorData.MUSIC_TRACKS));
 
     public MusicPage() throws Exception {
         if (!isPresent()) {
             throw new Exception("ERROR MUSIC PAGE");
         }
-        tracks = $$(byXpath(LocatorData.MUSIC_TRACKS));
     }
 
     public boolean playMusicTrack() {

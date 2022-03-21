@@ -7,7 +7,7 @@ public abstract class BasePage {
 
     public abstract boolean isPresent();
 
-    public void logout() {
+    public void logout() {//url в mainPage
         toolbarRight.exitWithCheck();
     }
 }
