@@ -1,6 +1,7 @@
 package utils;
 
 public class LocatorData {
+
     public static final String TOOLBAR = ".//ul[@class='toolbar_nav']";
 
     public static final String TOOLBAR_RIGHT = ".//*[contains(@id, 'ToolbarUserDropdown')]//*[contains(@class, 'toolbar_dropdown_w')]";
