@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MessageTest extends BaseTest {
+
     private static MessagePage messagePage;
 
     @BeforeEach
@@ -12,6 +13,7 @@ public class MessageTest extends BaseTest {
         messagePage = loginPage.login(UserData.user1).goToMessage();
     }
 
+    // TODO
     @Test
     public void newMessageTest() {
         messagePage.sendMessage("msg");
