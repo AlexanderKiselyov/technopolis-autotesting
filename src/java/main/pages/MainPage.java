@@ -1,5 +1,6 @@
 package pages;
 
+import utils.LocatorData;
 import utils.Toolbar;
 import utils.User;
 
@@ -26,17 +27,18 @@ public class MainPage extends BasePage {
     }
 
     public MusicPage goToMusic() {
-        toolbar.getMusicElement().click();
+        toolbar.getMusicPage().shouldBe(Condition.visible.because("No music link found!")).click();
         return new MusicPage();
     }
 
     public MessagePage goToMessage() {
-        toolbar.getMessagePage().click();
+        toolbar.getMessagePage().shouldBe(Condition.visible.because("No message link found!")).click();
         return new MessagePage();
     }
 
     @Override
     void checkIfPresent() {
-        $(byXpath(userNameLocator)).shouldBe(Condition.visible);
+        $(byXpath(userNameLocator)).shouldBe(Condition.visible.because("Main Page has not been loaded: no user name found!"));
+        $(byXpath(LocatorData.MAIN_PHOTO)).shouldBe(Condition.visible.because("Main Page has not been loaded: no main photo found!"));
     }
 }

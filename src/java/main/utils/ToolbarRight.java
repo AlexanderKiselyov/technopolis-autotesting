@@ -1,5 +1,6 @@
 package utils;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -18,9 +19,9 @@ public class ToolbarRight {
     }
 
     public void exitWithCheck() {
-        toolbarRight.click();
-        exitButton.click();
-        exitConfirmButton.click();
+        toolbarRight.shouldBe(Condition.visible.because("No toolbar right found!")).click();
+        exitButton.shouldBe(Condition.visible.because("No exit button found!")).click();
+        exitConfirmButton.shouldBe(Condition.visible.because("No exit confirm button found!")).click();
     }
 
 }
