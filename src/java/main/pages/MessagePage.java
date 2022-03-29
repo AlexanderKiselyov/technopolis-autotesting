@@ -18,14 +18,14 @@ public class MessagePage extends BasePage {
 
     public MessagePage() {
         checkIfPresent();
-        dialogs.shouldHave(CollectionCondition.sizeGreaterThan(1));
+        dialogs.shouldHave(CollectionCondition.sizeGreaterThan(1).because("No dialogs found!"));
     }
 
     public void sendMessage(String message) {
         Random r = new Random();
         int dialogNum = r.nextInt(dialogs.size());
-        dialogs.get(dialogNum).click();
-        $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).pressEnter();
+        dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
+        $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).shouldBe(Condition.visible.because("No enter button found!")).pressEnter();
     }
 
     // TODO
@@ -34,10 +34,10 @@ public class MessagePage extends BasePage {
     }
 
     public void deleteMessage(String message) {
-        dialogs.get(0).click();
-        $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).hover();
-        $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible).hover();
-        $(byXpath(LocatorData.MESSAGE_DELETE)).click();
+        dialogs.get(0).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
+        $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).shouldBe(Condition.visible.because("No messages found!")).hover();
+        $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible.because("Message settings element has not been loaded!")).hover();
+        $(byXpath(LocatorData.MESSAGE_DELETE)).shouldBe(Condition.visible.because("No messages to delete found!")).click();
     }
 
     // TODO
@@ -47,6 +47,7 @@ public class MessagePage extends BasePage {
 
     @Override
     void checkIfPresent() {
-        $(byXpath(LocatorData.MESSAGE_NEW_DIALOG_BUTTON)).shouldBe(Condition.visible);
+        $(byXpath(LocatorData.MESSAGE_NEW_DIALOG_BUTTON)).shouldBe(Condition.visible.because("Message Page has not been loaded: no new dialog button found!"));
+        $(byXpath(LocatorData.MESSAGE_TITLE)).shouldBe(Condition.visible.because("Message Page has not been loaded: no title found!"));
     }
 }

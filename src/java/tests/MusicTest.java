@@ -15,7 +15,8 @@ public class MusicTest extends BaseTest {
 
     @Test
     public void playRandomTrackTest() {
-        int trackNum = musicPage.playMusicTrack();
+        int trackNum = musicPage.randomTrackNum();
+        musicPage.playMusicTrack(trackNum);
         musicPage.checkIfTrackIsPlaying(trackNum);
     }
 }

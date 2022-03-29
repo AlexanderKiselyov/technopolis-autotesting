@@ -32,12 +32,13 @@ public class LoginPage extends BasePage {
     public MainPage login(User user) {
         getLogin().setValue(user.getLogin());
         getPassword().setValue(user.getPassword());
-        getEnter().click();
+        getEnter().shouldBe(Condition.visible.because("No enter button found!")).click();
         return new MainPage(user);
     }
 
     @Override
     void checkIfPresent() {
-        $(byXpath(LocatorData.LOGIN_ENTER_FIELD)).shouldBe(Condition.visible);
+        $(byXpath(LocatorData.LOGIN_ENTER_FIELD)).shouldBe(Condition.visible.because("Login Page has not been loaded: enter login field not found!"));
+        $(byXpath(LocatorData.LOGIN_REGISTER_BUTTON)).shouldBe(Condition.visible.because("Login Page has not been loaded: login register button not found!"));
     }
 }

@@ -13,7 +13,7 @@ public class Toolbar {
         toolbar = $(byXpath(LocatorData.TOOLBAR));
     }
 
-    public SelenideElement getMusicElement() {
+    public SelenideElement getMusicPage() {
         return toolbar.$(byXpath(LocatorData.MUSIC_BUTTON));
     }
 
