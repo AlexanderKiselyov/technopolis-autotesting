@@ -5,7 +5,7 @@ import utils.ToolbarRight;
 public abstract class BasePage {
     private final ToolbarRight toolbarRight = new ToolbarRight();
 
-    public abstract boolean isPresent();
+    abstract void checkIfPresent();
 
     public void logout() {//url в mainPage
         toolbarRight.exitWithCheck();

@@ -17,11 +17,6 @@ public class ToolbarRight {
         exitConfirmButton = $(byXpath(LocatorData.TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON));
     }
 
-    public void exit() {
-        toolbarRight.click();
-        exitButton.click();
-    }
-
     public void exitWithCheck() {
         toolbarRight.click();
         exitButton.click();
