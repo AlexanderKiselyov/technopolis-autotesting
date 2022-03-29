@@ -13,9 +13,11 @@ public class User {
         this.id = id;
     }
 
-    public User(String login, String password) {
+    public User(String login, String password, String username) {
         this.login = login;
         this.password = password;
+        this.username = username;
+        this.id = "";
     }
 
     public String getLogin() {

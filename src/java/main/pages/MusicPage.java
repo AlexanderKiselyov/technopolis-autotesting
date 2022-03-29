@@ -5,35 +5,34 @@ import utils.LocatorData;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import java.time.Duration;
 import java.util.Random;
 
 import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class MusicPage extends BasePage {
 
     private static final ElementsCollection tracks = $$(byXpath(LocatorData.MUSIC_TRACKS));
 
-    public MusicPage() throws Exception {
-        if (!isPresent()) {
-            throw new Exception("ERROR MUSIC PAGE");
-        }
+    public MusicPage() {
+        checkIfPresent();
+        tracks.shouldHave(CollectionCondition.sizeGreaterThan(1));
     }
 
-    public boolean playMusicTrack() {
+    public int playMusicTrack() {
         Random r = new Random();
-        int trackNum = r.nextInt(tracks.shouldHave(CollectionCondition.sizeGreaterThan(1)).size());
+        int trackNum = r.nextInt(tracks.size());
         tracks.get(trackNum).click();
-        try {
-            tracks.get(trackNum).$(byXpath(LocatorData.MUSIC_TRACK_PLAYING)).should(Condition.exist, Duration.ofMillis(1000));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return trackNum;
     }
 
-    public boolean isPresent() {
-        return true;
+    public void checkIfTrackIsPlaying(int trackNum) {
+        tracks.get(trackNum).$(byXpath(LocatorData.MUSIC_TRACK_PLAYING)).should(Condition.visible);
+    }
+
+    @Override
+    void checkIfPresent() {
+        $(byXpath(LocatorData.MUSIC_MY_MUSIC_BUTTON)).shouldBe(Condition.visible);
     }
 }

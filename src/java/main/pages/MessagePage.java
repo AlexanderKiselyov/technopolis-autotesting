@@ -1,13 +1,11 @@
 package pages;
 
-import java.time.Duration;
-import java.util.Random;
+import utils.LocatorData;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-
-import utils.LocatorData;
+import java.util.Random;
 
 import static com.codeborne.selenide.Selectors.byCssSelector;
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -18,38 +16,37 @@ public class MessagePage extends BasePage {
 
     private static final ElementsCollection dialogs = $$(byCssSelector(LocatorData.MESSAGE_DIALOGS));
 
-    public MessagePage() throws Exception {
-        if (!isPresent()) {
-            throw new Exception("ERROR MESSAGE PAGE");
-        }
+    public MessagePage() {
+        checkIfPresent();
+        dialogs.shouldHave(CollectionCondition.sizeGreaterThan(1));
     }
 
-    public boolean sendMessage(String message) {
+    public void sendMessage(String message) {
         Random r = new Random();
-        int dialogNum = r.nextInt(dialogs.shouldHave(CollectionCondition.sizeGreaterThan(1)).size());
+        int dialogNum = r.nextInt(dialogs.size());
         dialogs.get(dialogNum).click();
-        try {
-            $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).pressEnter();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).pressEnter();
     }
 
-    public boolean deleteMessage(String message) {
+    // TODO
+    public void checkIfMessageSent() {
+
+    }
+
+    public void deleteMessage(String message) {
         dialogs.get(0).click();
-        try {
-            $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).hover();
-            $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible, Duration.ofMillis(2000)).hover();
-            $(byXpath(LocatorData.MESSAGE_DELETE)).click();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).hover();
+        $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible).hover();
+        $(byXpath(LocatorData.MESSAGE_DELETE)).click();
     }
 
-    public boolean isPresent() {
-        return true;
+    // TODO
+    public void checkIfMessageDeleted() {
+
+    }
+
+    @Override
+    void checkIfPresent() {
+        $(byXpath(LocatorData.MESSAGE_NEW_DIALOG_BUTTON)).shouldBe(Condition.visible);
     }
 }

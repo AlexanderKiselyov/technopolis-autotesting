@@ -3,6 +3,7 @@ package pages;
 import utils.LocatorData;
 import utils.User;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -11,11 +12,9 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage extends BasePage {
 
-    public LoginPage() throws Exception {
+    public LoginPage() {
         open(LocatorData.LOGIN_URL);
-        if (!isPresent()) {
-            throw new Exception("ERROR LOGIN PAGE");
-        }
+        checkIfPresent();
     }
 
     private SelenideElement getLogin() {
@@ -30,15 +29,15 @@ public class LoginPage extends BasePage {
         return $(byXpath(LocatorData.LOGIN_ENTER_FIELD));
     }
 
-    public MainPage login(User user) throws Exception {
+    public MainPage login(User user) {
         getLogin().setValue(user.getLogin());
         getPassword().setValue(user.getPassword());
         getEnter().click();
-        return new MainPage();
+        return new MainPage(user);
     }
 
     @Override
-    public boolean isPresent() {
-        return true;
+    void checkIfPresent() {
+        $(byXpath(LocatorData.LOGIN_ENTER_FIELD)).shouldBe(Condition.visible);
     }
 }

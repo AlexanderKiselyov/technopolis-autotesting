@@ -1,30 +1,42 @@
 package pages;
 
 import utils.Toolbar;
+import utils.User;
+
+import com.codeborne.selenide.Condition;
+
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BasePage {
 
-    Toolbar toolbar;
+    private final Toolbar toolbar;
+    private final String userNameLocator;
 
-    public MainPage() throws Exception {
-        if (!isPresent()) {
-            throw new Exception("ERROR MAIN PAGE");
-        }
+    public MainPage() {
+        userNameLocator = ".//a[@data-l='t,userPage']";
+        checkIfPresent();
         toolbar = new Toolbar();
     }
 
-    public MusicPage goToMusic() throws Exception {
+    public MainPage(User user) {
+        userNameLocator = ".//a[@data-l='t,userPage']//*[contains(text(), '" + user.getUsername() + "')]";
+        checkIfPresent();
+        toolbar = new Toolbar();
+    }
+
+    public MusicPage goToMusic() {
         toolbar.getMusicElement().click();
         return new MusicPage();
     }
 
-    public MessagePage goToMessage() throws Exception {
+    public MessagePage goToMessage() {
         toolbar.getMessagePage().click();
         return new MessagePage();
     }
 
     @Override
-    public boolean isPresent() {
-        return true;
+    void checkIfPresent() {
+        $(byXpath(userNameLocator)).shouldBe(Condition.visible);
     }
 }
