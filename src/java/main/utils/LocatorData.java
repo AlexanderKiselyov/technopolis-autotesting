@@ -26,8 +26,7 @@ public class LocatorData {
     public static final String MESSAGE_NEW_DIALOG_BUTTON = ".//msg-button[@data-tsid='open_plus_button']";
     public static final String MESSAGE_DIALOGS = "msg-parsed-text";
     public static final String MESSAGE_INPUT_FIELD = ".//msg-input[@data-tsid='write_msg_input']";
-    public static final String MESSAGE_LAST_SEND_MESSAGE = "msg-message";
     public static final String MESSAGE_SETTINGS = ".//msg-button[@data-tsid='more_message']";
-    public static final String MESSAGE_DELETE = ".//msg-tico[@icon='delete']";
+    public static final String MESSAGE_DELETE = ".//msg-tico[@data-tsid='remove_msg_button']";
     public static final String MESSAGE_TITLE = ".//*[contains(@key, 'title') and text()='Сообщения']";
 }

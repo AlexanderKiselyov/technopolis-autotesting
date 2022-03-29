@@ -7,23 +7,27 @@ import org.junit.jupiter.api.Test;
 public class MessageTest extends BaseTest {
 
     private static MessagePage messagePage;
+    private String message;
+    private int dialogNum;
 
     @BeforeEach
     public void setUp() {
         messagePage = loginPage.login(UserData.user1).goToMessage();
+        dialogNum = messagePage.generateDialogNum();
+        message = messagePage.generateMessage();
+    }
+
+    @Test
+    public void newMessageTest() {
+        messagePage.sendMessage(dialogNum, message);
+        messagePage.checkIfMessageSent(dialogNum, message);
     }
 
     // TODO
     @Test
-    public void newMessageTest() {
-        messagePage.sendMessage("msg");
-        messagePage.checkIfMessageSent();
-    }
-
-    // TODO
-    @Deprecated //WIP
     public void deleteMessageTest() {
-        messagePage.deleteMessage("msg");
-        messagePage.checkIfMessageDeleted();
+        messagePage.prepareMessageForDeleting(dialogNum, message);
+        messagePage.deleteMessage(dialogNum, message);
+        messagePage.checkIfMessageDeleted(dialogNum, message);
     }
 }
