@@ -5,6 +5,7 @@ import utils.LocatorData;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import java.util.Random;
 
 import static com.codeborne.selenide.Selectors.byCssSelector;
@@ -21,28 +22,46 @@ public class MessagePage extends BasePage {
         dialogs.shouldHave(CollectionCondition.sizeGreaterThan(1).because("No dialogs found!"));
     }
 
-    public void sendMessage(String message) {
+    private SelenideElement lastMessage(String message) {
+        return $(byXpath(".//*[text()='" + message + "']"));
+    }
+
+    public String generateMessage() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+    public int generateDialogNum() {
         Random r = new Random();
-        int dialogNum = r.nextInt(dialogs.size());
+        return r.nextInt(dialogs.size());
+    }
+
+    public void sendMessage(int dialogNum, String message) {
         dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
         $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).shouldBe(Condition.visible.because("No enter button found!")).pressEnter();
     }
 
-    // TODO
-    public void checkIfMessageSent() {
-
+    public void checkIfMessageSent(int dialogNum, String message) {
+        dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
+        lastMessage(message).shouldBe(Condition.visible.because("No messages found!"));
     }
 
-    public void deleteMessage(String message) {
-        dialogs.get(0).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
-        $(byCssSelector(LocatorData.MESSAGE_LAST_SEND_MESSAGE)).shouldBe(Condition.visible.because("No messages found!")).hover();
+    // TODO
+    public void deleteMessage(int dialogNum, String message) {
+        dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).hover();
+
+        lastMessage(message).shouldBe(Condition.visible.because("No messages found!")).hover();
         $(byXpath(LocatorData.MESSAGE_SETTINGS)).should(Condition.visible.because("Message settings element has not been loaded!")).hover();
         $(byXpath(LocatorData.MESSAGE_DELETE)).shouldBe(Condition.visible.because("No messages to delete found!")).click();
     }
 
-    // TODO
-    public void checkIfMessageDeleted() {
+    public void prepareMessageForDeleting(int dialogNum, String message) {
+        dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
+        $(byXpath(LocatorData.MESSAGE_INPUT_FIELD)).setValue(message).shouldBe(Condition.visible.because("No enter button found!")).pressEnter();
+    }
 
+    public void checkIfMessageDeleted(int dialogNum, String message) {
+        dialogs.get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!")).click();
+        lastMessage(message).shouldNotBe(Condition.visible.because("Message hasn't been deleted!"));
     }
 
     @Override
