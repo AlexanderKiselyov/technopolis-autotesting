@@ -12,7 +12,9 @@ public class MessageTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        messagePage = loginPage.login(UserData.user1).goToMessage();
+        messagePage = loginPage
+                .login(UserData.user1)
+                .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
     }

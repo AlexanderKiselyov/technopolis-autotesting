@@ -10,7 +10,9 @@ public class MusicTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        musicPage = loginPage.login(UserData.user1).goToMusic();
+        musicPage = loginPage
+                .login(UserData.user1)
+                .goToMusic();
     }
 
     @Test
