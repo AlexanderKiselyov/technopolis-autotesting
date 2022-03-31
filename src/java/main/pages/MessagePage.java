@@ -4,6 +4,10 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static com.codeborne.selenide.Selectors.byCssSelector;
@@ -17,8 +21,13 @@ public class MessagePage extends BasePage {
     private static final String MESSAGE_DIALOGS = "msg-parsed-text";
     private final String MESSAGE_INPUT_FIELD = ".//msg-input[@data-tsid='write_msg_input']";
     private final String MESSAGE_SETTINGS = ".//msg-button[@data-tsid='more_message']";
+    private final String MESSAGE_REPLY_BUTTON = ".//msg-button[@data-tsid='reply_message']";
+    private final String REPLIED_MESSAGE_TEXT = ".//msg-parsed-text[@data-tsid='replied_text']";
+    private final String MESSAGE_TEXT = ".//msg-parsed-text[@data-tsid='message_text']";
     private final String MESSAGE_DELETE = ".//msg-tico[@data-tsid='remove_msg_button']";
     private final String MESSAGE_TITLE = ".//*[contains(@key, 'title') and text()='Сообщения']";
+    private final String MESSAGE_CONFIRM_DELETION_BUTTON = ".//msg-button[@data-tsid='confirm-primary']";
+    private final String MESSAGES_LIST = "msg-message";
     private static final ElementsCollection dialogs = $$(byCssSelector(MESSAGE_DIALOGS));
 
     public MessagePage() {
@@ -27,7 +36,7 @@ public class MessagePage extends BasePage {
     }
 
     private SelenideElement lastMessage(String message) {
-        return $(byXpath(".//*[text()='" + message + "']"));
+        return $(byXpath(".//msg-parsed-text[text()='" + message + "']"));
     }
 
     public String generateMessage() {
@@ -59,32 +68,25 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.visible.because("No messages found!"));
     }
 
-    // TODO
     public void deleteMessage(int dialogNum, String message) {
         dialogs
                 .get(dialogNum)
                 .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .hover();
+                .click();
 
-        lastMessage(message)
+        $$(byCssSelector(MESSAGES_LIST))
+                .last()
                 .shouldBe(Condition.visible.because("No messages found!"))
-                .hover();
-        $(byXpath(MESSAGE_SETTINGS))
+                .hover()
+                .$(byXpath(MESSAGE_SETTINGS))
                 .should(Condition.visible.because("Message settings element has not been loaded!"))
                 .hover();
         $(byXpath(MESSAGE_DELETE))
                 .shouldBe(Condition.visible.because("No messages to delete found!"))
                 .click();
-    }
-
-    public void prepareMessageForDeleting(int dialogNum, String message) {
-        dialogs.get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
+        $(byXpath(MESSAGE_CONFIRM_DELETION_BUTTON))
+                .shouldBe(Condition.visible.because("Confirmation form has not been loaded!"))
                 .click();
-        $(byXpath(MESSAGE_INPUT_FIELD))
-                .setValue(message)
-                .shouldBe(Condition.visible.because("No enter button found!"))
-                .pressEnter();
     }
 
     public void checkIfMessageDeleted(int dialogNum, String message) {
@@ -94,6 +96,52 @@ public class MessagePage extends BasePage {
                 .click();
         lastMessage(message)
                 .shouldNotBe(Condition.visible.because("Message hasn't been deleted!"));
+    }
+
+    public void replyLastMessage(int dialogNum, String message) {
+        dialogs
+                .get(dialogNum)
+                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
+                .click();
+
+        $$(byCssSelector(MESSAGES_LIST))
+                .last()
+                .shouldBe(Condition.visible.because("No messages found!"))
+                .hover()
+                .$(byXpath(MESSAGE_REPLY_BUTTON))
+                .should(Condition.visible.because("Reply button has not been loaded!"))
+                .click();
+
+        $(byXpath(MESSAGE_INPUT_FIELD))
+                .setValue(message)
+                .shouldBe(Condition.visible.because("No enter button found!"))
+                .pressEnter();
+    }
+
+    public void checkIfMessageReplied(int dialogNum, String message) {
+        dialogs
+                .get(dialogNum)
+                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
+                .click();
+
+        $$(byCssSelector(MESSAGES_LIST))
+                .last()
+                .$(byXpath(REPLIED_MESSAGE_TEXT))
+                .shouldBe(Condition.matchText(message));
+        $$(byCssSelector(MESSAGES_LIST))
+                .last()
+                .$(byXpath(MESSAGE_TEXT))
+                .shouldBe(Condition.matchText(message));
+    }
+
+    public void prepareMessage(int dialogNum, String message) {
+        dialogs.get(dialogNum)
+                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
+                .click();
+        $(byXpath(MESSAGE_INPUT_FIELD))
+                .setValue(message)
+                .shouldBe(Condition.visible.because("No enter button found!"))
+                .pressEnter();
     }
 
     @Override

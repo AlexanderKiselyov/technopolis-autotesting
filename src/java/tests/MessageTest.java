@@ -25,11 +25,17 @@ public class MessageTest extends BaseTest {
         messagePage.checkIfMessageSent(dialogNum, message);
     }
 
-    // TODO
     @Test
     public void deleteMessageTest() {
-        messagePage.prepareMessageForDeleting(dialogNum, message);
+        messagePage.prepareMessage(dialogNum, message);
         messagePage.deleteMessage(dialogNum, message);
         messagePage.checkIfMessageDeleted(dialogNum, message);
+    }
+
+    @Test
+    public void replyMessageTest() {
+        messagePage.prepareMessage(dialogNum, message);
+        messagePage.replyLastMessage(dialogNum, message);
+        messagePage.checkIfMessageReplied(dialogNum, message);
     }
 }
