@@ -52,7 +52,8 @@ public class MessagePage extends BasePage {
 
     public void checkIfMessageSent(int dialogNum, String message) {
         dialogs
-                .get(dialogNum).shouldBe(Condition.visible.because("No dialog with the specified number found!"))
+                .get(dialogNum)
+                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
                 .click();
         lastMessage(message)
                 .shouldBe(Condition.visible.because("No messages found!"));
