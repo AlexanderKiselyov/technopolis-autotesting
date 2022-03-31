@@ -28,7 +28,7 @@ public class MessageTest extends BaseTest {
     @Test
     public void deleteMessageTest() {
         messagePage.prepareMessage(dialogNum, message);
-        messagePage.deleteMessage(dialogNum, message);
+        messagePage.deleteMessage(dialogNum);
         messagePage.checkIfMessageDeleted(dialogNum, message);
     }
 
