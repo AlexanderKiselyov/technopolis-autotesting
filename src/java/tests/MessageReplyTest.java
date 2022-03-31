@@ -1,10 +1,11 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pages.MessagePage;
 import utils.UserData;
 
-public class DeleteMessageTest extends BaseTest {
+public class MessageReplyTest extends BaseTest {
 
     private static MessagePage messagePage;
     private String message;
@@ -21,8 +22,14 @@ public class DeleteMessageTest extends BaseTest {
     }
 
     @Test
-    public void deleteMessageTest() {
+    public void replyMessageTest() {
+        messagePage.replyLastMessage(dialogNum, message);
+        messagePage.checkIfMessageReplied(dialogNum, message);
+    }
+
+    @AfterEach
+    public void setDown() {
         messagePage.deleteMessage(dialogNum);
-        messagePage.checkIfMessageDeleted(dialogNum, message);
+        super.setDown();
     }
 }
