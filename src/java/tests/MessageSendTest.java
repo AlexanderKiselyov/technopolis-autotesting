@@ -1,11 +1,11 @@
+import pages.MessagePage;
+import utils.UserData;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import pages.MessagePage;
-import utils.UserData;
-
-public class ReplyMessageTest extends BaseTest {
+public class MessageSendTest extends BaseTest {
 
     private static MessagePage messagePage;
     private String message;
@@ -18,13 +18,12 @@ public class ReplyMessageTest extends BaseTest {
                 .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
-        messagePage.prepareMessage(dialogNum, message);
     }
 
     @Test
-    public void replyMessageTest() {
-        messagePage.replyLastMessage(dialogNum, message);
-        messagePage.checkIfMessageReplied(dialogNum, message);
+    public void sendMessageTest() {
+        messagePage.sendMessage(dialogNum, message);
+        messagePage.checkIfMessageSent(dialogNum, message);
     }
 
     @AfterEach
