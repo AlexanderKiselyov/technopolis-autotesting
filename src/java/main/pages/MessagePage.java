@@ -4,10 +4,6 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import static com.codeborne.selenide.Selectors.byCssSelector;
@@ -68,7 +64,7 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.visible.because("No messages found!"));
     }
 
-    public void deleteMessage(int dialogNum, String message) {
+    public void deleteMessage(int dialogNum) {
         dialogs
                 .get(dialogNum)
                 .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
