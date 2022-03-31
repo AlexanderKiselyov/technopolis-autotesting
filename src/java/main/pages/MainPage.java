@@ -1,6 +1,5 @@
 package pages;
 
-import utils.LocatorData;
 import utils.Toolbar;
 import utils.User;
 
@@ -12,33 +11,45 @@ import static com.codeborne.selenide.Selenide.$;
 public class MainPage extends BasePage {
 
     private final Toolbar toolbar;
-    private final String userNameLocator;
+    private static final String userNameLocator = ".//a[@data-l='t,userPage']";
+    private final String MAIN_PHOTO = ".//*[@class='entity-avatar']";
 
     public MainPage() {
-        userNameLocator = ".//a[@data-l='t,userPage']";
         checkIfPresent();
         toolbar = new Toolbar();
     }
 
     public MainPage(User user) {
-        userNameLocator = ".//a[@data-l='t,userPage']//*[contains(text(), '" + user.getUsername() + "')]";
+        checkIfUserNameCorrect(user.getUsername());
         checkIfPresent();
         toolbar = new Toolbar();
     }
 
     public MusicPage goToMusic() {
-        toolbar.getMusicPage().shouldBe(Condition.visible.because("No music link found!")).click();
+        toolbar
+                .getMusicPage()
+                .shouldBe(Condition.visible.because("No music link found!"))
+                .click();
         return new MusicPage();
     }
 
     public MessagePage goToMessage() {
-        toolbar.getMessagePage().shouldBe(Condition.visible.because("No message link found!")).click();
+        toolbar
+                .getMessagePage()
+                .shouldBe(Condition.visible.because("No message link found!"))
+                .click();
         return new MessagePage();
+    }
+
+    private void checkIfUserNameCorrect(String userName) {
+        $(byXpath(userNameLocator))
+                .$(byXpath(".//*[contains(text(), '" + userName + "')]"))
+                .shouldBe(Condition.visible.because("Main Page has not been loaded: no user name found!"));
     }
 
     @Override
     void checkIfPresent() {
-        $(byXpath(userNameLocator)).shouldBe(Condition.visible.because("Main Page has not been loaded: no user name found!"));
-        $(byXpath(LocatorData.MAIN_PHOTO)).shouldBe(Condition.visible.because("Main Page has not been loaded: no main photo found!"));
+        $(byXpath(MAIN_PHOTO))
+                .shouldBe(Condition.visible.because("Main Page has not been loaded: no main photo found!"));
     }
 }

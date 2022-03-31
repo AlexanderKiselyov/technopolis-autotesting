@@ -1,5 +1,4 @@
 import pages.LoginPage;
-import utils.LocatorData;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +10,7 @@ import static com.codeborne.selenide.WebDriverRunner.closeWindow;
 
 public abstract class BaseTest {
 
+    private final String LOGIN_URL = "https://ok.ru/";
     static LoginPage loginPage;
 
     @BeforeAll
@@ -20,7 +20,7 @@ public abstract class BaseTest {
 
     @AfterEach
     public void setDown() {
-        open(LocatorData.LOGIN_URL);
+        open(LOGIN_URL);
         loginPage.logout();
     }
 
