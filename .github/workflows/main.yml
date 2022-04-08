@@ -31,7 +31,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run a build
-        run: ./gradlew build
-
-      - name: Run a test
-        run: ./gradlew test
+        run: mvn -B package --file pom.xml
