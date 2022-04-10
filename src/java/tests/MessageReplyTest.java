@@ -1,14 +1,14 @@
+import pages.MessagePage;
+import utils.UserData;
+
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.codeborne.selenide.ElementsCollection;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-import pages.MessagePage;
-import utils.UserData;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class MessageReplyTest extends BaseTest {
 
@@ -35,8 +35,10 @@ public class MessageReplyTest extends BaseTest {
 
         ElementsCollection messages = messagePage.getAllMessages(dialogNum);
 
-        assertThat(messages, is(not(empty())));
-        assertThat(messages, hasSize(countMessagesBefore + 1));
+        assertAll("messages",
+                () -> assertThat(messages, is(not(empty()))),
+                () -> assertThat(messages, hasSize(countMessagesBefore + 1))
+        );
     }
 
     @AfterEach
