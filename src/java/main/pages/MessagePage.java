@@ -5,7 +5,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Random;
-
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selectors.byCssSelector;
@@ -135,7 +134,7 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.matchText(message));
     }
 
-    public void markMessageAsNew(int dialogNum, String message) {
+    public void markMessageAsNew(int dialogNum) {
         dialogs
                 .get(dialogNum)
                 .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
@@ -153,7 +152,7 @@ public class MessagePage extends BasePage {
                 .click();
     }
 
-    public void checkIfMessageMarkedAsNew(int dialogNum, String message) {
+    public void checkIfMessageMarkedAsNew(int dialogNum) {
         dialogs
                 .get(dialogNum)
                 .shouldBe(Condition.visible.because("No dialog with the specified number found!"))

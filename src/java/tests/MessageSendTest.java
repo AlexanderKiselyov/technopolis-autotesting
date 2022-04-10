@@ -1,15 +1,16 @@
 import pages.MessagePage;
 import utils.UserData;
 
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-import com.codeborne.selenide.ElementsCollection;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class MessageSendTest extends BaseTest {
 
@@ -34,8 +35,10 @@ public class MessageSendTest extends BaseTest {
         messagePage.checkIfMessageSent(dialogNum, message);
         ElementsCollection messages = messagePage.getAllMessages(dialogNum);
 
-        assertThat(messages, is(not(empty())));
-        assertThat(messages, hasSize(countMessagesBefore + 1));
+        assertAll("messages",
+                () -> assertThat(messages, is(not(empty()))),
+                () -> assertThat(messages, hasSize(countMessagesBefore + 1))
+        );
     }
 
     @Nested
@@ -49,8 +52,8 @@ public class MessageSendTest extends BaseTest {
 
         @Test
         public void markAsNewMessageTest() {
-            messagePage.markMessageAsNew(dialogNum, message);
-            messagePage.checkIfMessageMarkedAsNew(dialogNum, message);
+            messagePage.markMessageAsNew(dialogNum);
+            messagePage.checkIfMessageMarkedAsNew(dialogNum);
         }
     }
 

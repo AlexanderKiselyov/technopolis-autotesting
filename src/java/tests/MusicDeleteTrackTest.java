@@ -1,10 +1,12 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import pages.MusicPage;
 import utils.UserData;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class MusicDeleteTrackTest extends BaseTest {
     private static MusicPage musicPage;
@@ -23,7 +25,7 @@ public class MusicDeleteTrackTest extends BaseTest {
     @Test
     public void deleteTrackTest() {
         musicPage.deleteTrack(trackTitle);
-        assertTrue(musicPage.isTrackDeleted(trackTitle));
+        assertThat(musicPage.isTrackDeleted(trackTitle), is(true));
     }
 
     @AfterEach

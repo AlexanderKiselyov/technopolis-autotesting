@@ -8,7 +8,7 @@ public abstract class BasePage {
 
     abstract void checkIfPresent();
 
-    public void logout() {//url в mainPage
+    public void logout() {
         toolbarRight.exitWithCheck();
     }
 }

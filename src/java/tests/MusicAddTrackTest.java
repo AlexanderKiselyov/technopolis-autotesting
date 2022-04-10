@@ -5,7 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class MusicAddTrackTest extends BaseTest {
 
@@ -24,7 +25,7 @@ public class MusicAddTrackTest extends BaseTest {
         int trackNum = musicPage.randomTrackNum();
         String trackTitle = musicPage.addMusicTrack(trackNum);
         String currentTrackTitle = musicPage.getAddedTrackName();
-        assertEquals(trackTitle, currentTrackTitle);
+        assertThat(trackTitle, equalTo(currentTrackTitle));
     }
 
     @AfterEach
