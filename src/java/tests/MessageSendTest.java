@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class MessageSendTest extends BaseTest {
@@ -26,14 +29,14 @@ public class MessageSendTest extends BaseTest {
                 .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
-        countMessagesBefore = messagePage.getAllMessages(dialogNum).size();
+        countMessagesBefore = messagePage.getAllMessagesFromDialog(dialogNum).size();
     }
 
     @Test
     public void sendMessageTest() {
         messagePage.sendMessage(dialogNum, message);
         messagePage.checkIfMessageSent(dialogNum, message);
-        ElementsCollection messages = messagePage.getAllMessages(dialogNum);
+        ElementsCollection messages = messagePage.getAllMessagesFromDialog(dialogNum);
 
         assertAll("messages",
                 () -> assertThat(messages, is(not(empty()))),
@@ -52,14 +55,14 @@ public class MessageSendTest extends BaseTest {
 
         @Test
         public void markAsNewMessageTest() {
-            messagePage.markMessageAsNew(dialogNum);
+            messagePage.markLastMessageAsNew(dialogNum);
             messagePage.checkIfMessageMarkedAsNew(dialogNum);
         }
     }
 
     @AfterEach
     public void setDown() {
-        messagePage.deleteMessage(dialogNum);
+        messagePage.deleteLastMessage(dialogNum);
         super.setDown();
     }
 }

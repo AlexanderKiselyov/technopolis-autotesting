@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class MainPage extends BasePage {
 
     private final Toolbar toolbar;
-    private static final String userNameLocator = ".//a[@data-l='t,userPage']";
+    private static final String USER_NAME_LOCATOR = ".//a[@data-l='t,userPage']";
     private final String MAIN_PHOTO = ".//*[@class='entity-avatar']";
 
     public MainPage() {
@@ -42,7 +42,7 @@ public class MainPage extends BasePage {
     }
 
     private void checkIfUserNameCorrect(String userName) {
-        $(byXpath(userNameLocator))
+        $(byXpath(USER_NAME_LOCATOR))
                 .$(byXpath(".//*[contains(text(), '" + userName + "')]"))
                 .shouldBe(Condition.visible.because("Main Page has not been loaded: no user name found!"));
     }

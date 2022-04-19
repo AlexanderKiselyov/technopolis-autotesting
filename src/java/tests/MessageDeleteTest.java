@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Timeout;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class MessageDeleteTest extends BaseTest {
@@ -25,16 +28,16 @@ public class MessageDeleteTest extends BaseTest {
                 .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
-        messagePage.prepareMessage(dialogNum, message);
-        countMessagesBefore = messagePage.getAllMessages(dialogNum).size();
+        messagePage.sendMessage(dialogNum, message);
+        countMessagesBefore = messagePage.getAllMessagesFromDialog(dialogNum).size();
     }
 
     @Test
     @Timeout(value = 10, unit = SECONDS)
     public void deleteMessageTest() {
-        messagePage.deleteMessage(dialogNum);
+        messagePage.deleteLastMessage(dialogNum);
         messagePage.checkIfMessageDeleted(dialogNum, message);
-        ElementsCollection messages = messagePage.getAllMessages(dialogNum);
+        ElementsCollection messages = messagePage.getAllMessagesFromDialog(dialogNum);
 
         assertAll("messages",
                 () -> assertThat(messages, is(not(empty()))),

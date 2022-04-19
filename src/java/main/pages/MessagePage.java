@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.$$;
 public class MessagePage extends BasePage {
 
     private final String MESSAGE_NEW_DIALOG_BUTTON = ".//msg-button[@data-tsid='open_plus_button']";
-    private static final String MESSAGE_DIALOGS = "msg-chats-list-item";
+    private final String MESSAGE_DIALOGS = "msg-chats-list-item";
     private final String MESSAGE_INPUT_FIELD = ".//msg-input[@data-tsid='write_msg_input']";
     private final String MESSAGE_SETTINGS = ".//msg-button[@data-tsid='more_message']";
     private final String MESSAGE_REPLY_BUTTON = ".//msg-button[@data-tsid='reply_message']";
@@ -28,7 +28,7 @@ public class MessagePage extends BasePage {
     private final String MESSAGE_TITLE = ".//*[contains(@key, 'title') and text()='Сообщения']";
     private final String MESSAGE_CONFIRM_DELETION_BUTTON = ".//msg-button[@data-tsid='confirm-primary']";
     private final String MESSAGES_LIST = "msg-message";
-    private static final ElementsCollection dialogs = $$(byCssSelector(MESSAGE_DIALOGS));
+    private final ElementsCollection dialogs = $$(byCssSelector(MESSAGE_DIALOGS));
 
     public MessagePage() {
         checkIfPresent();
@@ -48,11 +48,15 @@ public class MessagePage extends BasePage {
         return r.nextInt(dialogs.size());
     }
 
-    public void sendMessage(int dialogNum, String message) {
+    public void getDialog(int dialogNum) {
         dialogs
                 .get(dialogNum)
                 .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
                 .click();
+    }
+
+    public void sendMessage(int dialogNum, String message) {
+        getDialog(dialogNum);
         $(byXpath(MESSAGE_INPUT_FIELD))
                 .setValue(message)
                 .shouldBe(Condition.visible.because("No enter button found!"))
@@ -60,20 +64,13 @@ public class MessagePage extends BasePage {
     }
 
     public void checkIfMessageSent(int dialogNum, String message) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
+        getDialog(dialogNum);
         lastMessage(message)
                 .shouldBe(Condition.visible.because("No messages found!"));
     }
 
-    public void deleteMessage(int dialogNum) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-
+    public void deleteLastMessage(int dialogNum) {
+        getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
                 .shouldBe(Condition.visible.because("No messages found!"))
@@ -90,20 +87,13 @@ public class MessagePage extends BasePage {
     }
 
     public void checkIfMessageDeleted(int dialogNum, String message) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
+        getDialog(dialogNum);
         lastMessage(message)
                 .shouldNotBe(Condition.visible.because("Message hasn't been deleted!"));
     }
 
     public void replyLastMessage(int dialogNum, String message) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-
+        getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
                 .shouldBe(Condition.visible.because("No messages found!"))
@@ -119,11 +109,7 @@ public class MessagePage extends BasePage {
     }
 
     public void checkIfMessageReplied(int dialogNum, String message) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-
+        getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
                 .$(byXpath(REPLIED_MESSAGE_TEXT))
@@ -134,12 +120,8 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.matchText(message));
     }
 
-    public void markMessageAsNew(int dialogNum) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-
+    public void markLastMessageAsNew(int dialogNum) {
+        getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
                 .shouldBe(Condition.visible.because("No messages found!"))
@@ -153,10 +135,7 @@ public class MessagePage extends BasePage {
     }
 
     public void checkIfMessageMarkedAsNew(int dialogNum) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
+        getDialog(dialogNum);
         $(byXpath(UNREAD_MESSAGE_DELIMETER))
                 .shouldBe(Condition.visible.because("Message hasn't been marked as new!"));
         dialogs
@@ -165,22 +144,8 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.visible.because("Message hasn't been marked as new!"));
     }
 
-    public void prepareMessage(int dialogNum, String message) {
-        dialogs.get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-        $(byXpath(MESSAGE_INPUT_FIELD))
-                .setValue(message)
-                .shouldBe(Condition.visible.because("No enter button found!"))
-                .pressEnter();
-    }
-
-    public ElementsCollection getAllMessages(int dialogNum) {
-        dialogs
-                .get(dialogNum)
-                .shouldBe(Condition.visible.because("No dialog with the specified number found!"))
-                .click();
-
+    public ElementsCollection getAllMessagesFromDialog(int dialogNum) {
+        getDialog(dialogNum);
         return $$(byCssSelector(MESSAGES_LIST)).shouldHave(CollectionCondition.sizeGreaterThanOrEqual(0));
     }
 
