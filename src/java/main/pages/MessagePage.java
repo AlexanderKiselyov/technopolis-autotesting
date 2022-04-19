@@ -55,7 +55,7 @@ public class MessagePage extends BasePage {
                 .click();
     }
 
-    public void sendMessage(int dialogNum, String message) {
+    public void sendMessageInDialog(int dialogNum, String message) {
         getDialog(dialogNum);
         $(byXpath(MESSAGE_INPUT_FIELD))
                 .setValue(message)
@@ -69,7 +69,7 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.visible.because("No messages found!"));
     }
 
-    public void deleteLastMessage(int dialogNum) {
+    public void deleteLastMessageInDialog(int dialogNum) {
         getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
@@ -92,7 +92,7 @@ public class MessagePage extends BasePage {
                 .shouldNotBe(Condition.visible.because("Message hasn't been deleted!"));
     }
 
-    public void replyLastMessage(int dialogNum, String message) {
+    public void replyLastMessageInDialog(int dialogNum, String message) {
         getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()
@@ -120,7 +120,7 @@ public class MessagePage extends BasePage {
                 .shouldBe(Condition.matchText(message));
     }
 
-    public void markLastMessageAsNew(int dialogNum) {
+    public void markLastMessageAsUnreadInDialog(int dialogNum) {
         getDialog(dialogNum);
         $$(byCssSelector(MESSAGES_LIST))
                 .last()

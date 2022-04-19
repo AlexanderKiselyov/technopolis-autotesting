@@ -34,7 +34,7 @@ public class MessageSendTest extends BaseTest {
 
     @Test
     public void sendMessageTest() {
-        messagePage.sendMessage(dialogNum, message);
+        messagePage.sendMessageInDialog(dialogNum, message);
         messagePage.checkIfMessageSent(dialogNum, message);
         ElementsCollection messages = messagePage.getAllMessagesFromDialog(dialogNum);
 
@@ -50,19 +50,19 @@ public class MessageSendTest extends BaseTest {
 
         @BeforeEach
         public void setUp() {
-            messagePage.sendMessage(dialogNum, message);
+            messagePage.sendMessageInDialog(dialogNum, message);
         }
 
         @Test
         public void markAsNewMessageTest() {
-            messagePage.markLastMessageAsNew(dialogNum);
+            messagePage.markLastMessageAsUnreadInDialog(dialogNum);
             messagePage.checkIfMessageMarkedAsNew(dialogNum);
         }
     }
 
     @AfterEach
     public void setDown() {
-        messagePage.deleteLastMessage(dialogNum);
+        messagePage.deleteLastMessageInDialog(dialogNum);
         super.setDown();
     }
 }

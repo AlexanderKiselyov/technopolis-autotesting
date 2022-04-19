@@ -29,13 +29,13 @@ public class MessageReplyTest extends BaseTest {
                 .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
-        messagePage.sendMessage(dialogNum, message);
+        messagePage.sendMessageInDialog(dialogNum, message);
         countMessagesBefore = messagePage.getAllMessagesFromDialog(dialogNum).size();
     }
 
     @Test
     public void replyMessageTest() {
-        messagePage.replyLastMessage(dialogNum, message);
+        messagePage.replyLastMessageInDialog(dialogNum, message);
         messagePage.checkIfMessageReplied(dialogNum, message);
 
         ElementsCollection messages = messagePage.getAllMessagesFromDialog(dialogNum);
@@ -49,9 +49,9 @@ public class MessageReplyTest extends BaseTest {
     @AfterEach
     public void setDown() {
         // удаляем 2 последних сообщения: и отправленное в BeforeEach сообщение, и сообщение-ответ
-        messagePage.deleteLastMessage(dialogNum);
+        messagePage.deleteLastMessageInDialog(dialogNum);
         Selenide.refresh();
-        messagePage.deleteLastMessage(dialogNum);
+        messagePage.deleteLastMessageInDialog(dialogNum);
         super.setDown();
     }
 }

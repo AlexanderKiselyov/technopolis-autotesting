@@ -28,14 +28,14 @@ public class MessageDeleteTest extends BaseTest {
                 .goToMessage();
         dialogNum = messagePage.generateDialogNum();
         message = messagePage.generateMessage();
-        messagePage.sendMessage(dialogNum, message);
+        messagePage.sendMessageInDialog(dialogNum, message);
         countMessagesBefore = messagePage.getAllMessagesFromDialog(dialogNum).size();
     }
 
     @Test
     @Timeout(value = 10, unit = SECONDS)
     public void deleteMessageTest() {
-        messagePage.deleteLastMessage(dialogNum);
+        messagePage.deleteLastMessageInDialog(dialogNum);
         messagePage.checkIfMessageDeleted(dialogNum, message);
         ElementsCollection messages = messagePage.getAllMessagesFromDialog(dialogNum);
 
