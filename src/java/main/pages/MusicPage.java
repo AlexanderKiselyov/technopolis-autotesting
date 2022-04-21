@@ -1,11 +1,12 @@
 package pages;
 
+import utils.Toolbar;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Random;
 import org.openqa.selenium.By;
-import utils.Toolbar;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;

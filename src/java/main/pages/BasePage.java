@@ -3,9 +3,10 @@ package pages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utils.ToolbarRight;
+
 import com.codeborne.selenide.ex.ElementNotFound;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import utils.ToolbarRight;
 
 public abstract class BasePage extends LoadableComponent<BasePage> {
 
@@ -22,6 +23,5 @@ public abstract class BasePage extends LoadableComponent<BasePage> {
         } catch (ElementNotFound e) {
             logger.error("Cannot logout." , e);
         }
-
     }
 }
