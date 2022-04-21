@@ -3,11 +3,7 @@ import utils.UserData;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-@Timeout(value = 10, unit = SECONDS)
 public class MusicPlayRandomTrackTest extends BaseTest {
     
     private static MusicPage musicPage;

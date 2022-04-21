@@ -1,8 +1,9 @@
 package utils;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -11,25 +12,25 @@ public class ToolbarRight {
     private final SelenideElement toolbarRight;
     private final SelenideElement exitButton;
     private final SelenideElement exitConfirmButton;
-    private final String TOOLBAR_RIGHT = ".//*[contains(@id, 'ToolbarUserDropdown')]//*[contains(@class, 'toolbar_dropdown_w')]";
-    private final String TOOLBAR_RIGHT_EXIT_BUTTON = ".//a[@data-l='t,logout']";
-    private final String TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON = ".//input[@data-l='t,logout']";
+    private static final By TOOLBAR_RIGHT = byXpath(".//*[contains(@id, 'ToolbarUserDropdown')]//*[contains(@class, 'toolbar_dropdown_w')]");
+    private static final By TOOLBAR_RIGHT_EXIT_BUTTON = byXpath(".//a[@data-l='t,logout']");
+    private static final By TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON = byXpath(".//input[@data-l='t,logout']");
 
     public ToolbarRight() {
-        toolbarRight = $(byXpath(TOOLBAR_RIGHT));
-        exitButton = $(byXpath(TOOLBAR_RIGHT_EXIT_BUTTON));
-        exitConfirmButton = $(byXpath(TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON));
+        toolbarRight = $(TOOLBAR_RIGHT);
+        exitButton = $(TOOLBAR_RIGHT_EXIT_BUTTON);
+        exitConfirmButton = $(TOOLBAR_RIGHT_EXIT_CONFIRM_BUTTON);
     }
 
     public void exitWithCheck() {
         toolbarRight
-                .shouldBe(Condition.visible.because("No toolbar right found!"))
+                .shouldBe(visible.because("No toolbar right found!"))
                 .click();
         exitButton
-                .shouldBe(Condition.visible.because("No exit button found!"))
+                .shouldBe(visible.because("No exit button found!"))
                 .click();
         exitConfirmButton
-                .shouldBe(Condition.visible.because("No exit confirm button found!"))
+                .shouldBe(visible.because("No exit confirm button found!"))
                 .click();
     }
 

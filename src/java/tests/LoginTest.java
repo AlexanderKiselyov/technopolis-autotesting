@@ -1,53 +1,42 @@
-import pages.LoginPage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import utils.User;
 import utils.UserData;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.codeborne.selenide.ex.ElementShouldNot;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
-import static com.codeborne.selenide.WebDriverRunner.closeWindow;
 import static java.util.Arrays.asList;
 
-@RunWith(DataProviderRunner.class)
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
-    private static final String LOGIN_URL = "https://ok.ru/";
-    static LoginPage loginPage;
+    private final Logger logger = LoggerFactory.getLogger(LoginTest.class);
 
-    @BeforeClass
-    public static void start() {
-        loginPage = new LoginPage();
-    }
-
-    @Test
-    @UseDataProvider("loadUsers")
+    @ParameterizedTest
+    @MethodSource("loadUsers")
     public void checkLogin(User user) {
         loginPage.login(user);
     }
 
-    @After
-    public void setDown() {
-        open(LOGIN_URL);
-        loginPage.logout();
+    @ParameterizedTest
+    @MethodSource("loadIncorrectUsers")
+    public void checkIncorrectLogin(User user) {
+        try {
+            loginPage.login(user);
+        }
+        catch (ElementShouldNot e) {
+            logger.error("Invalid login or/and password.", e);
+        }
     }
 
-    @AfterClass
-    public static void stop() {
-        closeWindow();
-        closeWebDriver();
-    }
-
-    @DataProvider
-    public static List<User> loadUsers() {
+    private static List<User> loadUsers() {
         return asList(UserData.user1, UserData.user2);
+    }
+    
+    private static List<User> loadIncorrectUsers() {
+        return asList(new User("", "", ""), new User("123456789", "123456", "abcdef", "123456"));
     }
 }

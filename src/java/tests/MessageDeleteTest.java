@@ -4,9 +4,7 @@ import utils.UserData;
 import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -33,7 +31,6 @@ public class MessageDeleteTest extends BaseTest {
     }
 
     @Test
-    @Timeout(value = 10, unit = SECONDS)
     public void deleteMessageTest() {
         messagePage.deleteLastMessageInDialog(dialogNum);
         messagePage.checkIfMessageDeleted(dialogNum, message);
