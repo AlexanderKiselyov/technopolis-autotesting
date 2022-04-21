@@ -1,26 +1,27 @@
 package utils;
 
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
 public class Toolbar {
 
-    public final String TOOLBAR = ".//ul[@class='toolbar_nav']";
-    public final String MUSIC_BUTTON = ".//*[@id='music_toolbar_button']";
-    public final String MESSAGE_BUTTON = ".//*[@id='msg_toolbar_button']";
+    public static final By TOOLBAR = byXpath(".//ul[@class='toolbar_nav']");
+    public static final By MUSIC_BUTTON = byXpath(".//*[@id='music_toolbar_button']");
+    public static final By MESSAGE_BUTTON = byXpath(".//*[@id='msg_toolbar_button']");
     private final SelenideElement toolbar;
 
     public Toolbar() {
-        toolbar = $(byXpath(TOOLBAR));
+        toolbar = $(TOOLBAR);
     }
 
     public SelenideElement getMusicPage() {
-        return toolbar.$(byXpath(MUSIC_BUTTON));
+        return toolbar.$(MUSIC_BUTTON);
     }
 
     public SelenideElement getMessagePage() {
-        return toolbar.$(byXpath(MESSAGE_BUTTON));
+        return toolbar.$(MESSAGE_BUTTON);
     }
 }

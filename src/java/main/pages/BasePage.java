@@ -1,14 +1,27 @@
 package pages;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.codeborne.selenide.ex.ElementNotFound;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.ToolbarRight;
 
-public abstract class BasePage {
+public abstract class BasePage extends LoadableComponent<BasePage> {
 
     private final ToolbarRight toolbarRight = new ToolbarRight();
+    private final Logger logger = LoggerFactory.getLogger(BasePage.class);
 
-    abstract void checkIfPresent();
+    protected BasePage() {
+        super.get();
+    }
 
     public void logout() {
-        toolbarRight.exitWithCheck();
+        try {
+            toolbarRight.exitWithCheck();
+        } catch (ElementNotFound e) {
+            logger.error("Cannot logout." , e);
+        }
+
     }
 }

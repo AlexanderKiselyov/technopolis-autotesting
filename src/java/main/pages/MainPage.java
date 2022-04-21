@@ -3,32 +3,43 @@ package pages;
 import utils.Toolbar;
 import utils.User;
 
-import com.codeborne.selenide.Condition;
+import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage extends BasePage {
 
     private final Toolbar toolbar;
-    private static final String USER_NAME_LOCATOR = ".//a[@data-l='t,userPage']";
-    private final String MAIN_PHOTO = ".//*[@class='entity-avatar']";
+    private static final By USER_NAME_LOCATOR = byXpath(".//a[@data-l='t,userPage']");
+    private static final By MAIN_PHOTO = byXpath(".//*[@class='entity-avatar']");
 
     public MainPage() {
-        checkIfPresent();
         toolbar = new Toolbar();
+    }
+
+    @Override
+    protected void load() {
+        $(USER_NAME_LOCATOR)
+                .shouldBe(visible.because("No user name found!"));
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        $(MAIN_PHOTO)
+                .shouldBe(visible.because("Main Page has not been loaded: no main photo found!"));
     }
 
     public MainPage(User user) {
         checkIfUserNameCorrect(user.getUsername());
-        checkIfPresent();
         toolbar = new Toolbar();
     }
 
     public MusicPage goToMusic() {
         toolbar
                 .getMusicPage()
-                .shouldBe(Condition.visible.because("No music link found!"))
+                .shouldBe(visible.because("No music link found!"))
                 .click();
         return new MusicPage();
     }
@@ -36,20 +47,14 @@ public class MainPage extends BasePage {
     public MessagePage goToMessage() {
         toolbar
                 .getMessagePage()
-                .shouldBe(Condition.visible.because("No message link found!"))
+                .shouldBe(visible.because("No message link found!"))
                 .click();
         return new MessagePage();
     }
 
     private void checkIfUserNameCorrect(String userName) {
-        $(byXpath(USER_NAME_LOCATOR))
+        $(USER_NAME_LOCATOR)
                 .$(byXpath(".//*[contains(text(), '" + userName + "')]"))
-                .shouldBe(Condition.visible.because("Main Page has not been loaded: no user name found!"));
-    }
-
-    @Override
-    void checkIfPresent() {
-        $(byXpath(MAIN_PHOTO))
-                .shouldBe(Condition.visible.because("Main Page has not been loaded: no main photo found!"));
+                .shouldBe(visible.because("Main Page has not been loaded: no user name found!"));
     }
 }
