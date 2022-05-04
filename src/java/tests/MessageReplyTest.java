@@ -1,9 +1,11 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pages.LoginPage;
 import pages.MessagePage;
 import utils.UserData;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,9 +23,12 @@ public class MessageReplyTest extends BaseTest {
     private String message;
     private int dialogNum;
     private int countMessagesBefore;
+    static LoginPage loginPage;
+    private final Logger logger = LoggerFactory.getLogger(MessageReplyTest.class);
 
     @BeforeEach
     public void setUp() {
+        loginPage = new LoginPage();
         messagePage = loginPage
                 .login(UserData.user1)
                 .goToMessage();
@@ -48,10 +53,10 @@ public class MessageReplyTest extends BaseTest {
 
     @AfterEach
     public void setDown() {
-        // удаляем 2 последних сообщения: и отправленное в BeforeEach сообщение, и сообщение-ответ
+        logger.info("удаляем 2 последних сообщения: и отправленное в BeforeEach сообщение, и сообщение-ответ");
         messagePage.deleteLastMessageInDialog(dialogNum);
         Selenide.refresh();
         messagePage.deleteLastMessageInDialog(dialogNum);
-        super.setDown();
+        loginPage.logout();
     }
 }

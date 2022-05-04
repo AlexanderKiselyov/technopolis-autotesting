@@ -88,13 +88,7 @@ public class MessagePage extends BasePage {
 
     public void deleteLastMessageInDialog(int dialogNum) {
         getDialog(dialogNum);
-        $$(MESSAGES_LIST)
-                .last()
-                .shouldBe(visible.because("No messages found!"))
-                .hover()
-                .$(MESSAGE_SETTINGS)
-                .shouldBe(visible.because("Message settings element has not been loaded!"))
-                .hover();
+        getLastMessageSettings();
         $(MESSAGE_DELETE)
                 .shouldBe(visible.because("No messages to delete found!"))
                 .click();
@@ -164,5 +158,15 @@ public class MessagePage extends BasePage {
     public ElementsCollection getAllMessagesFromDialog(int dialogNum) {
         getDialog(dialogNum);
         return $$(MESSAGES_LIST).shouldHave(CollectionCondition.sizeGreaterThanOrEqual(0));
+    }
+
+    private void getLastMessageSettings() {
+        $$(MESSAGES_LIST)
+                .last()
+                .shouldBe(visible.because("No messages found!"))
+                .hover()
+                .$(MESSAGE_SETTINGS)
+                .shouldBe(visible.because("Message settings element has not been loaded!"))
+                .hover();
     }
 }
