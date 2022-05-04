@@ -1,3 +1,4 @@
+import pages.LoginPage;
 import pages.MusicPage;
 import utils.UserData;
 
@@ -11,9 +12,11 @@ import static org.hamcrest.Matchers.equalTo;
 public class MusicAddTrackTest extends BaseTest {
 
     private static MusicPage musicPage;
+    static LoginPage loginPage;
 
     @BeforeEach
     public void setUp() {
+        loginPage = new LoginPage();
         musicPage = loginPage
                 .login(UserData.user1)
                 .goToMusic();
@@ -31,6 +34,6 @@ public class MusicAddTrackTest extends BaseTest {
     @AfterEach
     public void setDown() {
         musicPage.deleteAllTracks();
-        super.setDown();
+        loginPage.logout();
     }
 }

@@ -1,7 +1,9 @@
+import pages.LoginPage;
 import pages.MessagePage;
 import utils.UserData;
 
 import com.codeborne.selenide.ElementsCollection;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +20,11 @@ public class MessageDeleteTest extends BaseTest {
     private String message;
     private int dialogNum;
     private int countMessagesBefore;
+    static LoginPage loginPage;
 
     @BeforeEach
     public void setUp() {
+        loginPage = new LoginPage();
         messagePage = loginPage
                 .login(UserData.user1)
                 .goToMessage();
@@ -40,5 +44,10 @@ public class MessageDeleteTest extends BaseTest {
                 () -> assertThat(messages, is(not(empty()))),
                 () -> assertThat(messages, hasSize(countMessagesBefore))
         );
+    }
+
+    @AfterEach
+    public void setDown() {
+        loginPage.logout();
     }
 }

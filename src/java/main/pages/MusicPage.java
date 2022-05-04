@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.refresh;
 
 public class MusicPage extends BasePage {
 
@@ -119,8 +120,7 @@ public class MusicPage extends BasePage {
     }
 
     public boolean isTrackDeleted(String trackTitle) {
-        goToRecommendations();
-        goToMyMusic();
+        refresh();
         for (SelenideElement myTrack : myTracks) {
             if (myTrack.$(MUSIC_TRACK_TITLE).text().equals(trackTitle)) {
                 return false;

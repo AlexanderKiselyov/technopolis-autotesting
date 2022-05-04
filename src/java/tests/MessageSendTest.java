@@ -1,3 +1,4 @@
+import pages.LoginPage;
 import pages.MessagePage;
 import utils.UserData;
 
@@ -21,9 +22,11 @@ public class MessageSendTest extends BaseTest {
     private String message;
     private int dialogNum;
     private int countMessagesBefore;
+    static LoginPage loginPage;
 
     @BeforeEach
     public void setUp() {
+        loginPage = new LoginPage();
         messagePage = loginPage
                 .login(UserData.user1)
                 .goToMessage();
@@ -63,6 +66,6 @@ public class MessageSendTest extends BaseTest {
     @AfterEach
     public void setDown() {
         messagePage.deleteLastMessageInDialog(dialogNum);
-        super.setDown();
+        loginPage.logout();
     }
 }
