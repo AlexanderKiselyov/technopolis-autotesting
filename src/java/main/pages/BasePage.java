@@ -6,4 +6,7 @@ public abstract class BasePage extends LoadableComponent<BasePage> {
     protected BasePage() {
         super.get();
     }
+
+    protected void load() {
+    }
 }

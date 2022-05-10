@@ -5,7 +5,7 @@ import pages.MessagePage;
 import utils.UserData;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,9 +54,9 @@ public class MessageReplyTest extends BaseTest {
     @AfterEach
     public void setDown() {
         logger.info("удаляем 2 последних сообщения: и отправленное в BeforeEach сообщение, и сообщение-ответ");
-        messagePage.deleteLastMessageInDialog(dialogNum);
-        Selenide.refresh();
-        messagePage.deleteLastMessageInDialog(dialogNum);
+        int messageCount = messagePage.getAllMessagesFromDialog(dialogNum).size();
+        messagePage.deleteMessageWithSpecifiedNumberInDialog(dialogNum, messageCount - 1);
+        messagePage.deleteMessageWithSpecifiedNumberInDialog(dialogNum, messageCount - 2);
         loginPage.logout();
     }
 }

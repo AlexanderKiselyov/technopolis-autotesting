@@ -29,17 +29,12 @@ public class MusicPage extends BasePage {
     private final ElementsCollection myTracks = $$(MUSIC_MY_MUSIC_TRACK_LIST);
 
     public MusicPage() {
-
-    }
-
-    @Override
-    protected void load() {
-        $(Toolbar.MUSIC_BUTTON)
-                .shouldBe(visible.because("Music button is not visible!"));
     }
 
     @Override
     protected void isLoaded() throws Error {
+        $(Toolbar.MUSIC_BUTTON)
+                .shouldBe(visible.because("Music button is not visible!"));
         $(MUSIC_MY_MUSIC_BUTTON)
                 .shouldBe(visible.because("Music Page has not been loaded: no my music button found!"));
         $(MUSIC_COLLECTIONS_BUTTON)

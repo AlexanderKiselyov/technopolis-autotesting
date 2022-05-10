@@ -28,12 +28,7 @@ public class LoginPage extends BasePage {
     }
 
     @Override
-    protected void load() {
-    }
-
-    @Override
     protected void isLoaded() throws Error {
-        open("/");
         $(LOGIN_ENTER_FIELD)
                 .shouldBe(visible.because("Login Page has not been loaded: enter login field not found!"));
         $(LOGIN_REGISTER_BUTTON)
