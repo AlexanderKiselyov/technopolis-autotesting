@@ -3,7 +3,6 @@ import org.slf4j.LoggerFactory;
 
 import pages.LoginPage;
 import utils.User;
-import utils.UserData;
 
 import com.codeborne.selenide.ex.ElementShouldNot;
 import java.util.List;
@@ -13,10 +12,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.fail;
 
-public class LoginTest extends BaseTest {
+public class InvalidLoginTest extends BaseTest {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginTest.class);
+    private final Logger logger = LoggerFactory.getLogger(ValidLoginTest.class);
     static LoginPage loginPage;
 
     @BeforeEach
@@ -26,12 +26,16 @@ public class LoginTest extends BaseTest {
 
     @ParameterizedTest
     @MethodSource("loadUsers")
-    public void checkLogin(User user) {
+    public void checkInvalidLogin(User user) {
         try {
             loginPage.login(user);
+            fail();
         }
         catch (ElementShouldNot e) {
             logger.error("Invalid login or/and password.", e);
+        }
+        catch (AssertionError assertionError) {
+            logger.error("Test with invalid userdata passed.", assertionError);
         }
     }
 
@@ -41,9 +45,9 @@ public class LoginTest extends BaseTest {
     }
 
     private static List<User> loadUsers() {
-        return asList(UserData.user1,
-                        UserData.user2,
-                        new User("", "", ""),
-                        new User("123456789", "123456", "abcdef", "123456"));
+        return asList(new User("", "", ""),
+                new User("", "123456", "abcdef", "123456"),
+                new User("123456789", "", "abcdef", "123456"),
+                new User("123456789", "123456", "abcdef", "123456"));
     }
 }
