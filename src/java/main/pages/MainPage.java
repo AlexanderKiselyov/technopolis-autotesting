@@ -26,13 +26,9 @@ public class MainPage extends BasePage {
     }
 
     @Override
-    protected void load() {
+    protected void isLoaded() throws Error {
         $(USER_NAME_LOCATOR)
                 .shouldBe(visible.because("No user name found!"));
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
         $(MAIN_PHOTO)
                 .shouldBe(visible.because("Main Page has not been loaded: no main photo found!"));
     }

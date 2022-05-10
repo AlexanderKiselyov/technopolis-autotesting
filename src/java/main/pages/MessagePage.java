@@ -45,13 +45,9 @@ public class MessagePage extends BasePage {
     }
 
     @Override
-    protected void load() {
+    protected void isLoaded() throws Error {
         $(Toolbar.MESSAGE_BUTTON)
                 .shouldBe(visible.because("Message button is not visible!"));
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
         $(MESSAGE_NEW_DIALOG_BUTTON)
                 .shouldBe(visible.because("Message Page has not been loaded: no new dialog button found!"));
         $(MESSAGE_TITLE)
@@ -92,15 +88,20 @@ public class MessagePage extends BasePage {
                 .shouldBe(visible.because("No messages found!"));
     }
 
-    public void deleteLastMessageInDialog(int dialogNum) {
+    public void deleteMessageWithSpecifiedNumberInDialog(int dialogNum, int messageNum) {
         getDialog(dialogNum);
-        getLastMessageSettings();
+        getSettingsOfMessageWithSpecifiedNumber(messageNum);
         $(MESSAGE_DELETE)
                 .shouldBe(visible.because("No messages to delete found!"))
                 .click();
         $(MESSAGE_CONFIRM_DELETION_BUTTON)
                 .shouldBe(visible.because("Confirmation form has not been loaded!"))
                 .click();
+    }
+
+    public void deleteLastMessageInDialog(int dialogNum) {
+        int messageCount = getAllMessagesFromDialog(dialogNum).size();
+        deleteMessageWithSpecifiedNumberInDialog(dialogNum, messageCount - 1);
     }
 
     public void checkIfMessageDeleted(int dialogNum, String message) {
@@ -166,9 +167,9 @@ public class MessagePage extends BasePage {
         return $$(MESSAGES_LIST).shouldHave(CollectionCondition.sizeGreaterThanOrEqual(0));
     }
 
-    private void getLastMessageSettings() {
+    private void getSettingsOfMessageWithSpecifiedNumber(int messageNum) {
         $$(MESSAGES_LIST)
-                .last()
+                .get(messageNum)
                 .shouldBe(visible.because("No messages found!"))
                 .hover()
                 .$(MESSAGE_SETTINGS)
