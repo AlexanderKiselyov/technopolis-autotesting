@@ -6,17 +6,16 @@ import utils.User;
 
 import com.codeborne.selenide.ex.ElementShouldNot;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class InvalidLoginTest extends BaseTest {
 
-    private final Logger logger = LoggerFactory.getLogger(ValidLoginTest.class);
+    private final Logger logger = LoggerFactory.getLogger(InvalidLoginTest.class);
     static LoginPage loginPage;
 
     @BeforeEach
@@ -37,11 +36,6 @@ public class InvalidLoginTest extends BaseTest {
         catch (AssertionError assertionError) {
             logger.error("Test with invalid userdata passed.", assertionError);
         }
-    }
-
-    @AfterEach
-    public void setDown() {
-        loginPage.logout();
     }
 
     private static List<User> loadUsers() {
