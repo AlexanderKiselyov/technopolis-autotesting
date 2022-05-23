@@ -1,12 +1,16 @@
 package pages;
 
 import utils.Toolbar;
+import utils.ToolbarRight;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ex.ElementNotFound;
 import java.util.Random;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -27,6 +31,8 @@ public class MusicPage extends BasePage {
     private static final By MUSIC_TRACK_TITLE = byXpath(".//a[@data-l='t,title']");
     private final ElementsCollection tracks = $$(MUSIC_TRACKS);
     private final ElementsCollection myTracks = $$(MUSIC_MY_MUSIC_TRACK_LIST);
+    private final ToolbarRight toolbarRight = new ToolbarRight();
+    private final Logger logger = LoggerFactory.getLogger(MusicPage.class);
 
     public MusicPage() {
 
@@ -47,14 +53,12 @@ public class MusicPage extends BasePage {
     }
 
     public int randomTrackNum() {
-        goToRecommendations();
         tracks.shouldHave(CollectionCondition.sizeGreaterThan(1).because("No tracks found!"));
         Random r = new Random();
         return r.nextInt(tracks.size());
     }
 
     public void playMusicTrack(int trackNum) {
-        goToRecommendations();
         tracks
                 .shouldHave(CollectionCondition.sizeGreaterThan(1).because("No tracks found!"))
                 .get(trackNum)
@@ -129,7 +133,7 @@ public class MusicPage extends BasePage {
         return true;
     }
 
-    private void goToRecommendations() {
+    public void goToRecommendations() {
         $(MUSIC_RECOMMENDATIONS_BUTTON)
                 .shouldBe(visible.because("No recommendation music button found!"))
                 .click();
@@ -139,5 +143,13 @@ public class MusicPage extends BasePage {
         $(MUSIC_MY_MUSIC_BUTTON)
                 .shouldBe(visible.because("No my music button found!"))
                 .click();
+    }
+
+    public void logout() {
+        try {
+            toolbarRight.exitWithCheck();
+        } catch (ElementNotFound e) {
+            logger.error("Cannot logout." , e);
+        }
     }
 }

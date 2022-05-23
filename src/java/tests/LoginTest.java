@@ -2,6 +2,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pages.LoginPage;
+import pages.MainPage;
 import utils.User;
 import utils.UserData;
 
@@ -18,6 +19,7 @@ public class LoginTest extends BaseTest {
 
     private final Logger logger = LoggerFactory.getLogger(LoginTest.class);
     static LoginPage loginPage;
+    static MainPage mainPage;
 
     @BeforeEach
     public void setUp() {
@@ -28,7 +30,7 @@ public class LoginTest extends BaseTest {
     @MethodSource("loadUsers")
     public void checkLogin(User user) {
         try {
-            loginPage.login(user);
+            mainPage = loginPage.login(user);
         }
         catch (ElementShouldNot e) {
             logger.error("Invalid login or/and password.", e);
@@ -37,7 +39,7 @@ public class LoginTest extends BaseTest {
 
     @AfterEach
     public void setDown() {
-        loginPage.logout();
+        mainPage.logout();
     }
 
     private static List<User> loadUsers() {

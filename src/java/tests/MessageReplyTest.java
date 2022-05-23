@@ -57,6 +57,6 @@ public class MessageReplyTest extends BaseTest {
         messagePage.deleteLastMessageInDialog(dialogNum);
         Selenide.refresh();
         messagePage.deleteLastMessageInDialog(dialogNum);
-        loginPage.logout();
+        messagePage.logout();
     }
 }

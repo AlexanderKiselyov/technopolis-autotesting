@@ -25,6 +25,7 @@ public class MusicAddTrackTest extends BaseTest {
 
     @Test
     public void newTrackAddTest() {
+        musicPage.goToRecommendations();
         int trackNum = musicPage.randomTrackNum();
         String trackTitle = musicPage.addMusicTrack(trackNum);
         String currentTrackTitle = musicPage.getAddedTrackName();
@@ -34,6 +35,6 @@ public class MusicAddTrackTest extends BaseTest {
     @AfterEach
     public void setDown() {
         musicPage.deleteAllTracks();
-        loginPage.logout();
+        musicPage.logout();
     }
 }
