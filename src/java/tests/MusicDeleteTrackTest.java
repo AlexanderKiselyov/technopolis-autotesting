@@ -22,6 +22,7 @@ public class MusicDeleteTrackTest extends BaseTest {
                 .login(UserData.user1)
                 .goToMusic();
         musicPage.deleteAllTracks();
+        musicPage.goToRecommendations();
         int trackNum = musicPage.randomTrackNum();
         trackTitle = musicPage.addMusicTrack(trackNum);
     }
@@ -35,6 +36,6 @@ public class MusicDeleteTrackTest extends BaseTest {
     @AfterEach
     public void setDown() {
         musicPage.deleteAllTracks();
-        loginPage.logout();
+        musicPage.logout();
     }
 }

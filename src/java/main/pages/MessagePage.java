@@ -1,12 +1,16 @@
 package pages;
 
+import com.codeborne.selenide.ex.ElementNotFound;
 import utils.Toolbar;
+import utils.ToolbarRight;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Random;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.codeborne.selenide.Condition.matchText;
 import static com.codeborne.selenide.Condition.visible;
@@ -32,6 +36,8 @@ public class MessagePage extends BasePage {
     private static final By MESSAGE_CONFIRM_DELETION_BUTTON = byXpath(".//msg-button[@data-tsid='confirm-primary']");
     private static final By MESSAGES_LIST = byCssSelector("msg-message");
     private final ElementsCollection dialogs = $$(MESSAGE_DIALOGS);
+    private final ToolbarRight toolbarRight = new ToolbarRight();
+    private final Logger logger = LoggerFactory.getLogger(MessagePage.class);
 
     public MessagePage() {
         dialogs
@@ -169,5 +175,13 @@ public class MessagePage extends BasePage {
                 .$(MESSAGE_SETTINGS)
                 .shouldBe(visible.because("Message settings element has not been loaded!"))
                 .hover();
+    }
+
+    public void logout() {
+        try {
+            toolbarRight.exitWithCheck();
+        } catch (ElementNotFound e) {
+            logger.error("Cannot logout." , e);
+        }
     }
 }

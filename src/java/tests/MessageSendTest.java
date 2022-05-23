@@ -66,6 +66,6 @@ public class MessageSendTest extends BaseTest {
     @AfterEach
     public void setDown() {
         messagePage.deleteLastMessageInDialog(dialogNum);
-        loginPage.logout();
+        messagePage.logout();
     }
 }

@@ -28,6 +28,6 @@ public class MusicPlayRandomTrackTest extends BaseTest {
 
     @AfterEach
     public void setDown() {
-        loginPage.logout();
+        musicPage.logout();
     }
 }

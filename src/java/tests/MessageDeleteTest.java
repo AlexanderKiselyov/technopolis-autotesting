@@ -48,6 +48,6 @@ public class MessageDeleteTest extends BaseTest {
 
     @AfterEach
     public void setDown() {
-        loginPage.logout();
+        messagePage.logout();
     }
 }
