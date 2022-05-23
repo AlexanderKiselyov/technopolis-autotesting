@@ -57,6 +57,6 @@ public class MessageReplyTest extends BaseTest {
         int messageCount = messagePage.getAllMessagesFromDialog(dialogNum).size();
         messagePage.deleteMessageWithSpecifiedNumberInDialog(dialogNum, messageCount - 1);
         messagePage.deleteMessageWithSpecifiedNumberInDialog(dialogNum, messageCount - 2);
-        loginPage.logout();
+        messagePage.logout();
     }
 }
