@@ -1,6 +1,7 @@
 # technopolis-autotesting
 
 UI Autotesting with Selenide
+
 Also contains PIT Mutation Tests
 
 Create test configuration using PIT Runner plugin:
